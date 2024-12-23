@@ -557,48 +557,101 @@ a.second;                 // 3
 ```
 
 ## `map` (associative array - usually implemented as binary search trees - avg. time complexity: O(log n))
-
-```cpp
-#include <map>            // Include map (std namespace)
-map<string, int> a;       // Map from string to int
-a["hello"] = 3;           // Add or replace element a["hello"]
-for (auto& p:a)
-    cout << p.first << p.second;  // Prints hello, 3
-a.size();                 // 1
-```
-
 ## `unordered_map` (associative array - usually implemented as hash table - avg. time complexity: O(1))
 
 ```cpp
-#include <unordered_map>  // Include map (std namespace)
-unordered_map<string, int> a; // Map from string to int
-a["hello"] = 3;           // Add or replace element a["hello"]
-for (auto& p:a)
-    cout << p.first << p.second;  // Prints hello, 3
-a.size();                 // 1
+#include <unordered_map>
+#include <map>
+#include <iostream>
+using namespace std;
+
+// ==================== Unordered Map ====================
+// Characteristics: Unordered, O(1) average time complexity for insert/search/delete
+unordered_map<int, string> uMap;                // Declare an unordered_map
+
+// Operations
+uMap[1] = "one";                                // Insert or update (equivalent to put in Java)
+string val = uMap[1];                           // Access by key
+if (uMap.find(1) != uMap.end())                 // Check if key exists
+    cout << uMap[1] << endl;
+
+uMap.erase(1);                                  // Remove a key-value pair
+uMap.empty();                                   // Check if unordered_map is empty
+uMap.size();                                    // Get the size
+
+// Iteration
+for (auto iter = uMap.begin(); iter != uMap.end(); ++iter)
+    cout << iter->first << " -> " << iter->second << endl;
+
+// ==================== Map ====================
+// Characteristics: Ordered (sorted by keys), O(logN) time complexity for insert/search/delete
+map<int, string> treeMap;                       // Declare a map
+
+// Operations
+treeMap[2] = "two";                             // Insert or update
+if (treeMap.find(2) != treeMap.end())           // Check if key exists
+    cout << treeMap[2] << endl;
+
+treeMap.erase(2);                               // Remove a key-value pair
+treeMap.empty();                                // Check if map is empty
+treeMap.size();                                 // Get the size
+
+// Iteration
+for (auto& p : treeMap)
+    cout << p.first << " -> " << p.second << endl;  // Print key-value pairs
 ```
 
 ## `set` (store unique elements - usually implemented as binary search trees - avg. time complexity: O(log n))
-
-```cpp
-#include <set>            // Include set (std namespace)
-set<int> s;               // Set of integers
-s.insert(123);            // Add element to set
-if (s.find(123) != s.end()) // Search for an element
-    s.erase(123);
-cout << s.size();         // Number of elements in set
-```
-
 ## `unordered_set` (store unique elements - usually implemented as a hash set - avg. time complexity: O(1))
 
 ```cpp
-#include <unordered_set>  // Include set (std namespace)
-unordered_set<int> s;     // Set of integers
-s.insert(123);            // Add element to set
-if (s.find(123) != s.end()) // Search for an element
-    s.erase(123);
-cout << s.size();         // Number of elements in set
+#include <unordered_set>
+#include <set>
+#include <iostream>
+using namespace std;
+
+// ==================== Unordered Set ====================
+// Characteristics: Unordered, O(1) average time complexity for insert/search/delete
+unordered_set<int> uSet;                        // Declare an unordered_set
+
+// Operations
+uSet.insert(123);                               // Insert an element
+if (uSet.find(123) != uSet.end())               // Check if an element exists
+    cout << "Found 123" << endl;
+
+uSet.erase(123);                                // Remove an element
+uSet.empty();                                   // Check if unordered_set is empty
+uSet.size();                                    // Get the size
+
+// Iteration
+for (auto iter = uSet.begin(); iter != uSet.end(); ++iter)
+    cout << *iter << endl;                      // Print elements
+
+// ==================== Set ====================
+// Characteristics: Ordered, O(logN) time complexity for insert/search/delete
+set<int> treeSet;                               // Declare a set
+
+// Operations
+treeSet.insert(456);                            // Insert an element
+if (treeSet.find(456) != treeSet.end())         // Check if an element exists
+    treeSet.erase(456);                         // Remove an element
+
+treeSet.empty();                                // Check if set is empty
+treeSet.size();                                 // Get the size
+
+// Iteration
+for (auto& elem : treeSet)
+    cout << elem << endl;                       // Print elements
+
+// Additional Operations (Set-specific)
+auto it = treeSet.upper_bound(100);             // Iterator to the first element > 100
+auto it2 = treeSet.lower_bound(100);            // Iterator to the first element >= 100
+if (it != treeSet.end()) cout << "Upper Bound: " << *it << endl;
+if (it2 != treeSet.end()) cout << "Lower Bound: " << *it2 << endl;
 ```
+
+
+
 
 ## `algorithm` (A collection of 60 algorithms on sequences with iterators)
 
