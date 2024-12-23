@@ -409,26 +409,76 @@ s1 = to_string(12.05);    // Converts number to string
 getline(cin, s);          // Read line ending in '\n'
 ```
 
+## `array` 
+
+```cpp
+#include <iostream>
+int nums[10] = {0};                     // Initialize an array of size 10 with all elements set to 0
+
+// Convert array to vector
+#include <vector>
+std::vector<int> vec(&nums[0], &nums[10]); // Create a vector from array elements
+
+```
+
 ## `vector` (Variable sized array/stack with built in memory allocation)
 
 ```cpp
-#include <vector>         // Include vector (std namespace)
-vector<int> a(10);        // a[0]..a[9] are int (default size is 0)
-vector<int> b{1,2,3};        // Create vector with values 1,2,3
-a.size();                 // Number of elements (10)
-a.push_back(3);           // Increase size to 11, a[10]=3
-a.back()=4;               // a[10]=4;
-a.pop_back();             // Decrease size by 1
-a.front();                // a[0];
-a[20]=1;                  // Crash: not bounds checked
-a.at(20)=1;               // Like a[20] but throws out_of_range()
-for (int& p : a)
-  p=0;                    // C++11: Set all elements of a to 0
-for (vector<int>::iterator p=a.begin(); p!=a.end(); ++p)
-  *p=0;                   // C++03: Set all elements of a to 0
-vector<int> b(a.begin(), a.end());  // b is copy of a
-vector<T> c(n, x);        // c[0]..c[n-1] init to x
-T d[10]; vector<T> e(d, d+10);      // e is initialized from d
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
+// **Initialization**
+vector<int> v;                          // Empty vector
+vector<int> v(size, 0);                 // Vector with `size` elements, initialized to 0
+vector<int> v{1, 2, 3};                 // Vector with values {1, 2, 3}
+vector<vector<int>> v2d(N, vector<int>(M, 0)); // 2D vector (N x M), all elements initialized to 0
+
+// **Common Operations**
+int val = v[i];                         // Access element at index `i` (no bounds check)
+v.empty();                              // Check if vector is empty (returns bool)
+v.size();                               // Get number of elements in the vector
+v.push_back(3);                         // Add element `3` to the end of the vector
+v.pop_back();                           // Remove last element
+v.clear();                              // Remove all elements from the vector
+v.resize(num);                          // Resize vector to `num` elements
+v.resize(num, val);                     // Resize to `num` elements, initializing new ones to `val`
+v.front();                              // Access first element
+v.back();                               // Access last element
+v.at(i);                                // Bounds-checked access to element at index `i` (throws out_of_range)
+
+// **Insertion and Deletion**
+v.insert(v.begin(), var);               // Insert `var` at the beginning
+v.erase(v.begin() + 5);                 // Remove the 6th element
+v.begin();                              // Iterator to the first element
+v.end();                                // Iterator to the element after the last
+
+// **Iteration**
+for (int& p : v) {                      // Range-based loop (C++11 and above)
+    p = 0;                              // Set all elements to 0
+}
+
+for (vector<int>::iterator it = v.begin(); it != v.end(); ++it) { // Iterator-based loop (C++03)
+    cout << *it << endl;                // Print all elements
+}
+
+// **Sorting**
+sort(v.begin(), v.end());               // Sort vector in ascending order
+struct cmp {
+    bool operator() (int x, int y) {
+        return x > y;                   // Custom comparator for descending order
+    }
+};
+sort(v.begin(), v.end(), cmp());        // Sort using custom comparator
+
+// **Copy and Initialization from Other Containers**
+vector<int> v2(v.begin(), v.end());     // Copy all elements of `v` into `v2`
+int arr[10] = {1, 2, 3};                
+vector<int> v3(arr, arr + 10);          // Initialize vector from array
+
+// **2D Vector Initialization**
+vector<vector<int>> grid(5, vector<int>(4, 0)); // 5x4 grid initialized to 0
 ```
 
 ## `deque` (Array stack queue)
