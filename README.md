@@ -397,16 +397,72 @@ if (f2) f2 << x;            // Write to file
 ## `string` (Variable sized character array)
 
 ```cpp
-#include <string>         // Include string (std namespace)
-string s1, s2="hello";    // Create strings
-s1.size(), s2.size();     // Number of characters: 0, 5
-s1 += s2 + ' ' + "world"; // Concatenation
-s1 == "hello world"       // Comparison, also <, >, !=, etc.
-s1[0];                    // 'h'
-s1.substr(m, n);          // Substring of size n starting at s1[m]
-s1.c_str();               // Convert to const char*
-s1 = to_string(12.05);    // Converts number to string
-getline(cin, s);          // Read line ending in '\n'
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm> // For reverse
+using namespace std;
+
+// ==================== String Basics ====================
+string s1;                          // Empty string
+string s2 = "hello";                // Initialize string
+s1 = s2 + " world";                 // Concatenation
+s1.append("!");                     // Append string
+s1[0];                              // Direct access to first character
+s1.at(0);                           // Bounds-checked access (throws out_of_range)
+
+s1.substr(6, 5);                    // Get substring "world"
+string numStr = to_string(12345);   // Integer to string
+int num = stoi("67890");            // String to integer
+char ch = 'A';
+string chStr(1, ch);                // Char to string
+
+// ==================== String Utilities ====================
+string str = "hello world";
+
+// Find
+size_t found = str.find("world");   // Find first occurrence of "world"
+if (found != string::npos)
+    cout << "'world' found at index: " << found << endl;
+
+// Insert, replace, erase
+str.insert(5, ", beautiful");       // Insert substring
+str.replace(7, 9, "amazing");       // Replace "beautiful" with "amazing"
+str.erase(5, 8);                    // Erase ", amazing"
+
+// Reverse
+reverse(str.begin(), str.end());    // Reverse the string in place
+
+// Comparison
+string str1 = "apple", str2 = "banana";
+int cmp = str1.compare(str2);       // Lexicographical comparison
+// Returns: 0 (equal), -1 (str1 < str2), 1 (str1 > str2)
+
+// ==================== String Streams ====================
+stringstream ss;
+ss << "Year: " << 2023 << ", Month: " << 12; // Build a string
+ss.str();                                   // Get the string content
+
+// Splitting strings
+string input = "abc,def,ghi";
+istringstream iss(input);
+string token;
+while (getline(iss, token, ',')) {          // Split by delimiter ','
+    cout << "Token: " << token << endl;
+}
+
+// ==================== Advanced String Operations ====================
+// String constructors
+char charArr[] = "example";
+string str3(charArr);               // Construct from char array
+string str4(5, 'x');                // Construct with 5 'x' characters
+
+// Safe access
+try {
+    str3.at(10);                    // Access with bounds-checking (throws out_of_range)
+} catch (out_of_range& e) {
+    cout << "Exception caught: " << e.what() << endl;
+}
 ```
 
 ## `array` 
